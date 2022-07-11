@@ -1,17 +1,12 @@
-import { inject, injectable } from "tsyringe";
+import { inject, injectable } from 'tsyringe';
 
-import { IUsersRepository } from "../../../users/repositories/IUsersRepository";
-import { Statement } from "../../entities/Statement";
-import { IStatementsRepository } from "../../repositories/IStatementsRepository";
-import { GetBalanceError } from "./GetBalanceError";
+import { IUsersRepository } from '../../../users/repositories/IUsersRepository';
+import { BalanceMap } from '../../mappers/BalanceMap';
+import { IStatementsRepository } from '../../repositories/IStatementsRepository';
+import { GetBalanceError } from './GetBalanceError';
 
 interface IRequest {
   user_id: string;
-}
-
-interface IResponse {
-  statement: Statement[];
-  balance: number;
 }
 
 @injectable()
@@ -21,21 +16,23 @@ export class GetBalanceUseCase {
     private statementsRepository: IStatementsRepository,
 
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    private usersRepository: IUsersRepository
   ) {}
 
-  async execute({ user_id }: IRequest): Promise<IResponse> {
+  async execute({ user_id }: IRequest) {
     const user = await this.usersRepository.findById(user_id);
 
-    if(!user) {
+    if (!user) {
       throw new GetBalanceError();
     }
 
     const balance = await this.statementsRepository.getUserBalance({
       user_id,
-      with_statement: true
+      with_statement: true,
     });
 
-    return balance as IResponse;
+    const balanceDTO = BalanceMap.toDTO(balance);
+
+    return balanceDTO;
   }
 }

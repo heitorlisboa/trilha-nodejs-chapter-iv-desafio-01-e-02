@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { ProfileMap } from '../../mappers/ProfileMap';
 import { ShowUserProfileUseCase } from './ShowUserProfileUseCase';
 
 export class ShowUserProfileController {
@@ -10,10 +9,8 @@ export class ShowUserProfileController {
 
     const showUserProfile = container.resolve(ShowUserProfileUseCase);
 
-    const user = await showUserProfile.execute(id);
+    const userProfile = await showUserProfile.execute(id);
 
-    const profileDTO = ProfileMap.toDTO(user);
-
-    return response.json(profileDTO);
+    return response.json(userProfile);
   }
 }
