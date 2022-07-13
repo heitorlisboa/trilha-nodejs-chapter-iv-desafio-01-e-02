@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IUsersRepository } from "../../../users/repositories/IUsersRepository";
 import { IStatementsRepository } from "../../repositories/IStatementsRepository";
 import { GetStatementOperationError } from "./GetStatementOperationError";
+import { StatementMap } from "../../mappers/StatementMap";
 
 interface IRequest {
   user_id: string;
@@ -29,10 +30,12 @@ export class GetStatementOperationUseCase {
     const statementOperation = await this.statementsRepository
       .findStatementOperation({ user_id, statement_id });
 
-      if(!statementOperation) {
-        throw new GetStatementOperationError.StatementNotFound();
-      }
+    if(!statementOperation) {
+      throw new GetStatementOperationError.StatementNotFound();
+    }
 
-      return statementOperation;
+    const statementDTO = StatementMap.toDTO(statementOperation)
+
+    return statementDTO;
   }
 }

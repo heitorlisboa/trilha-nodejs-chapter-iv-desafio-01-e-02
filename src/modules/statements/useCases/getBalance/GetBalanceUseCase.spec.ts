@@ -30,15 +30,12 @@ describe('Get balance use case', () => {
   });
 
   it('should be able to get the user balance', async () => {
-    const statementWithoutUserId: Omit<ICreateStatementDTO, 'user_id'> = {
+    // Creating a statement
+    const statement = await statementsRepository.create({
       type: OperationType.WITHDRAW,
       amount: 1000,
       description: 'Statement description sample',
-    };
 
-    // Creating a statement
-    await statementsRepository.create({
-      ...statementWithoutUserId,
       user_id: userId,
     });
 
@@ -58,8 +55,7 @@ describe('Get balance use case', () => {
 
     expect(typeof balance).toBe('number');
     expect(balance).toEqual(calculatedBalance);
-    expect(statements[0]).not.toHaveProperty('user_id');
-    expect(statements[0]).toMatchObject(statementWithoutUserId);
+    expect(statements[0]).toMatchObject(statement);
   });
 
   it('should not be able to get the balance of a non-existent user', async () => {

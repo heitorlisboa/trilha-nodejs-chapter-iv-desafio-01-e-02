@@ -4,6 +4,7 @@ import { IUsersRepository } from "../../../users/repositories/IUsersRepository";
 import { IStatementsRepository } from "../../repositories/IStatementsRepository";
 import { CreateStatementError } from "./CreateStatementError";
 import { ICreateStatementDTO } from "./ICreateStatementDTO";
+import { StatementMap } from "../../mappers/StatementMap";
 
 @injectable()
 export class CreateStatementUseCase {
@@ -37,6 +38,8 @@ export class CreateStatementUseCase {
       description
     });
 
-    return statementOperation;
+    const statementDTO = StatementMap.toDTO(statementOperation);
+
+    return statementDTO;
   }
 }
