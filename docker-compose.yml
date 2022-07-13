@@ -11,6 +11,18 @@ services:
       - db-data:/data/postgres:rw
     ports:
       - 5432:5432
+  test-database:
+    image: postgres
+    container_name: database
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=fin_api_test
+    volumes:
+      - db-data:/data/postgres:rw
+    ports:
+      - 5432:5432
 
 volumes:
   db-data:

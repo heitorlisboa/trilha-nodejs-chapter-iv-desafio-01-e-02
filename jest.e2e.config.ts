@@ -9,10 +9,7 @@ export default {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: [
-    'src/**/in-memory/*Repository.ts',
-    'src/**/*UseCase.ts',
-  ],
+  collectCoverageFrom: ['src/**/*Controller.ts'],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -40,5 +37,5 @@ export default {
   testEnvironment: 'node',
 
   // The glob patterns Jest uses to detect test files
-  testMatch: ['**/*.spec.ts'],
+  testMatch: ['**/*.e2e-spec.ts'],
 };
