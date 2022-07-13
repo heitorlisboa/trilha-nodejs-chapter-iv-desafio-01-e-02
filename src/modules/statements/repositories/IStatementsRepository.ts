@@ -16,5 +16,5 @@ export interface IStatementsRepository {
   ): Promise<{ balance: number }>;
   getUserBalance(
     data: IGetBalanceDTOWithStatementTrue
-  ): Promise<{ balance: number; statement: Statement[] }>;
+  ): Promise<{ balance: number; statements: Statement[] }>;
 }

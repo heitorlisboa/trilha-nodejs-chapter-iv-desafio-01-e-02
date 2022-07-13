@@ -26,13 +26,13 @@ export class GetBalanceUseCase {
       throw new GetBalanceError();
     }
 
-    const balance = await this.statementsRepository.getUserBalance({
+    const balanceWithStatements = await this.statementsRepository.getUserBalance({
       user_id,
       with_statement: true,
     });
 
-    const balanceDTO = BalanceMap.toDTO(balance);
+    const balanceWithStatementsDTO = BalanceMap.toDTO(balanceWithStatements);
 
-    return balanceDTO;
+    return balanceWithStatementsDTO;
   }
 }

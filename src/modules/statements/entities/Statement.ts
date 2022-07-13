@@ -23,7 +23,7 @@ export class Statement {
   @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User, user => user.statement)
+  @ManyToOne(() => User, user => user.statements)
   @JoinColumn({ name: 'user_id' })
   user: User;
 

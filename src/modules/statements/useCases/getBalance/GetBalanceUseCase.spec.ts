@@ -43,7 +43,7 @@ describe('Get balance use case', () => {
     });
 
     // Getting the user balance and statements
-    const { balance, statement: statements } = await getBalanceUseCase.execute({
+    const { balance, statements } = await getBalanceUseCase.execute({
       user_id: userId,
     });
 
